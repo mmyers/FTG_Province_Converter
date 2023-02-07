@@ -1,0 +1,92 @@
+# Mapping of fields from CSV columns to TXT
+
+# Dots in the TXT are interpreted as sub-objects, e.g. gfx.city.x means
+# gfx = { city = { x = <value> } }
+
+# list is a special value meaning that there is a list here, e.g. gfx.river.list
+# means gfx = { river = { <value> } }
+# and if there are multiple columns mapped to the same list, just append them.
+
+# The string "unused" means a CSV field is not present in the TXT
+# The column number "-1" means a TXT value is not present in CSV
+
+mappings = {
+    0 = id
+    1 = name
+    2 = type
+    3 = religion
+    4 = culture
+    5 = size_modifier
+    6 = unused      # pashas, probably an EU1 holdover
+    7 = climate     # int in csv but string in txt
+    8 = ice
+    9 = storm
+    10 = unused     # galleys, now handled area-by-area
+    11 = manpower
+    12 = income
+    13 = terrain    # int in csv but string in txt
+    14 = unused     # ToT-SPA, now handled by provinces_special.txt
+    15 = unused     # ToT-POR, same
+    16 = unused     # HRE, now handled by provinces_special.txt
+    17 = unused     # mine, not needed
+    18 = value
+    19 = goods
+    20 = unused     # upgradable, probably an EU1 holdover
+    21 = cot_modifier
+    22 = colonization_difficulty
+    23 = natives.combat
+    24 = natives.ferocity
+    25 = natives.efficiency
+    26 = natives.tp_negotiation
+    27 = natives.tolerance
+    28 = gfx.city.x
+    29 = gfx.city.y
+    30 = gfx.army.x
+    31 = gfx.army.y
+    32 = gfx.port.x
+    33 = gfx.port.y
+    34 = gfx.manufactory.x
+    35 = gfx.manufactory.y
+    36 = sea_adjacency
+    37 = gfx.terrain1.x
+    38 = gfx.terrain1.y
+    39 = gfx.terrain1.variant
+    40 = gfx.terrain2.x
+    41 = gfx.terrain2.y
+    42 = gfx.terrain2.variant
+    43 = gfx.terrain3.x
+    44 = gfx.terrain3.y
+    45 = gfx.terrain3.variant
+    46 = gfx.terrain4.x
+    47 = gfx.terrain4.y
+    48 = gfx.terrain4.variant
+    49 = area
+    50 = region
+    51 = continent
+    52 = unused       # province name again
+    53 = gfx.river.list
+    54 = gfx.river.list
+    55 = gfx.river.list
+    56 = unused       # no idea what this one is - either 1, 0, or "#N/A"
+    57 = unused       # all the rest are coordinates used only by the old editor
+    58 = unused       # 10 pairs total
+    59 = unused
+    60 = unused
+    61 = unused
+    62 = unused
+    63 = unused
+    64 = unused
+    65 = unused
+    66 = unused
+    67 = unused
+    68 = unused
+    68 = unused
+    70 = unused
+    71 = unused
+    72 = unused
+    73 = unused
+    74 = unused
+    75 = unused
+    76 = unused
+    -1 = history.list   # FTG addition that was never used
+}
