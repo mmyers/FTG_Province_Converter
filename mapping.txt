@@ -64,9 +64,9 @@ mappings = {
     50 = region
     51 = continent
     52 = unused       # province name again
-    53 = gfx.river.list
-    54 = gfx.river.list
-    55 = gfx.river.list
+    53 = gfx.river.list.0
+    54 = gfx.river.list.1
+    55 = gfx.river.list.2
     56 = unused       # no idea what this one is - either 1, 0, or "#N/A"
     57 = unused       # all the rest are coordinates used only by the old editor
     58 = unused       # 10 pairs total
@@ -88,5 +88,155 @@ mappings = {
     74 = unused
     75 = unused
     76 = unused
-    -1 = history.list   # FTG addition that was never used
+    # -1 = history.list   # FTG addition that was never used
+}
+
+# Default for a column is an empty string if not specified here
+defaults = {
+    2 = inland      # type
+    3 = pagan       # religion
+    4 = none        # culture
+    5 = 0           # size modifier
+    6 = 0           # pashas
+    7 = 0           # climate
+    8 = 0           # ice
+    9 = 0           # storm
+    10 = 0          # galleys
+    11 = 0
+    12 = 0
+    13 = 0
+    14 = 0          # ToT-SPA
+    15 = 0          # ToT-POR
+    16 = 0          # HRE
+    17 = 0          # mine
+    19 = nothing    # goods
+    20 = 0          # upgradable
+    21 = -3         # COT modifier
+    22 = 0          # colonization difficulty
+    23 = 0          # natives
+    24 = 0
+    25 = 0
+    26 = 0
+    27 = 0
+    28 = 0          # gfx
+    29 = 0
+    30 = 0
+    31 = 0
+    32 = 0
+    33 = 0
+    34 = 0
+    35 = 0
+    36 = 0          # sea adjacency
+    37 = -100       # terrain x/y and variants
+    38 = -100
+    39 = 0
+    40 = -100
+    41 = -100
+    42 = 0
+    43 = -100
+    44 = -100
+    45 = 0
+    46 = -100
+    47 = -100
+    48 = 0
+    49 = "-"
+    50 = "-"
+    51 = "-"
+    52 = "#N/A"
+    53 = 0
+    54 = 0
+    55 = 0
+    56 = 0
+    57 = -1         # coordinates
+    58 = -1
+    59 = -1
+    60 = -1
+    61 = -1
+    62 = -1
+    63 = -1
+    64 = -1
+    65 = -1
+    66 = -1
+    67 = -1
+    68 = -1
+    68 = -1
+    70 = -1
+    71 = -1
+    72 = -1
+    73 = -1
+    74 = -1
+    75 = -1
+    76 = -1
+}
+
+# Conversion tables between EU2 and FTG values
+# Entered in both directions here because I was lazy writing the code
+convert = {
+    # climates
+    7 = {
+        0 = arctic
+        1 = desertic
+        2 = temperate
+        3 = temperate   # EU2 had two temperate climates
+        4 = tropical
+        5 = ncontinental
+        6 = tropical    # and two tropicals
+        7 = tundra
+        8 = scontinental
+
+        arctic = 0
+        desertic = 1
+        temperate = 2
+        tropical = 4
+        ncontinental = 5
+        tundra = 7
+        scontinental = 8
+    }
+
+    # terrain
+    13 = {
+        0 = plains
+        1 = forest
+        2 = mountain
+        3 = desert
+        4 = marsh
+        5 = sea
+        6 = river
+        8 = terra_incognita # does not appear there is a 7
+
+        plains = 0
+        forest = 1
+        mountain = 2
+        desert = 3
+        marsh = 4
+        sea = 5
+        river = 6
+        terra_incognita = 8
+    }
+
+    # goods
+    19 = {
+        navs = naval_supplies
+        grai = grain
+        sug = sugar
+        cot = cotton
+        tob = tobacco
+        mineral = copper
+        clo = cloth
+        spic = spices
+        orient = chinaware
+        ivor = ivory
+        slav = slaves
+
+        naval_supplies = navs
+        grain = grai
+        sugar = sug
+        cotton = cot
+        tobacco = tob
+        copper = mineral
+        cloth = clo
+        spices = spic
+        chinaware = orient
+        ivory = ivor
+        slaves = slav
 }
