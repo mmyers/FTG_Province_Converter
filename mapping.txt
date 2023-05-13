@@ -63,7 +63,7 @@ mappings = {
     49 = area
     50 = region
     51 = continent
-    52 = unused       # province name again
+    52 = city
     53 = gfx.river.list.0
     54 = gfx.river.list.1
     55 = gfx.river.list.2
@@ -191,6 +191,22 @@ convert = {
         ncontinental = 5
         tundra = 7
         scontinental = 8
+    }
+
+    # ice
+    8 = {
+        0 = no
+        1 = yes
+        no = 0
+        yes = 1
+    }
+
+    # storm
+    9 = {
+        0 = no
+        1 = yes
+        no = 0
+        yes = 1
     }
 
     # terrain

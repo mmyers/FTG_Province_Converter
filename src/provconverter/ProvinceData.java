@@ -147,16 +147,26 @@ public class ProvinceData {
             }
         }
         
-        EUGFileIO.save(root, filename, EUGFileIO.NO_COMMENT, true, Style.AGCEEP);
+        EUGFileIO.save(root, filename, EUGFileIO.NO_COMMENT, true, FTG_PROVINCES_STYLE);
     }
     
     private void convertCsvProvince(ProvinceCsv p, GenericObject provObj) {
         for (int i = 0; i < p.entry.length; i++) {
-            if (p.entry[i].equals("#N/A") || p.entry[i].equals("-") || p.entry[i].equals("0") || p.entry[i].equals("-100"))
+            if (p.entry[i].equals("#N/A") || p.entry[i].equals("-") || p.entry[i].equals("-100"))
                 continue;
-            String mapping = mappings.getString(Integer.toString(i));
+            String colStr = Integer.toString(i);
+            String mapping = mappings.getString(colStr);
             if (!mapping.isEmpty() && !mapping.equals("unused")) {
-                normalizeAndAdd(provObj, mapping, p.entry[i]);
+                String csvVal = p.entry[i];
+                
+                if (conversions.containsChild(colStr)) {
+                    GenericObject convert = conversions.getChild(colStr);
+                    if (convert.contains(csvVal))
+                        csvVal = convert.getString(csvVal);
+                }
+                
+                if (!csvVal.equals("0") && !csvVal.equals("no"))
+                    normalizeAndAdd(provObj, mapping, csvVal);
             }
         }
         for (String unusedMapping : mappings.getStrings("-1")) {
@@ -201,10 +211,6 @@ public class ProvinceData {
             } 
             if (entry[i] == null || entry[i].isEmpty()) {
                 entry[i] = defaultMappings.getString(colStr); // will be "" if no default exists
-            } else if (entry[i].equals("yes")) {
-                entry[i] = "1";
-            } else if (entry[i].equals("no")) {
-                entry[i] = "0";
             } else if (conversions.containsChild(colStr)) {
                 GenericObject convert = conversions.getChild(colStr);
                 if (convert.contains(entry[i])) {
@@ -246,8 +252,9 @@ public class ProvinceData {
         return allProvs.get(id);
     }
     
+    
+    
     public interface Province {
-        
         void writeOut(BufferedWriter out) throws IOException;
     }
     
@@ -279,6 +286,68 @@ public class ProvinceData {
         public void writeOut(BufferedWriter out) throws IOException {
             provObj.toFileString(out, Style.AGCEEP);
         }
-        
     }
+    
+    // same as Style.AGCEEP except objects are never inline if they have children
+    private static final Style FTG_PROVINCES_STYLE = new Style() {
+        @Override
+        public String getTab(int depth) {
+            return Style.AGCEEP.getTab(depth);
+        }
+
+        @Override
+        public String getEqualsSign(int depth) {
+            return Style.AGCEEP.getEqualsSign(depth);
+        }
+
+        @Override
+        public String getCommentStart() {
+            return Style.AGCEEP.getCommentStart();
+        }
+
+        @Override
+        public void printTab(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printTab(bw, depth);
+        }
+
+        @Override
+        public void printEqualsSign(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printEqualsSign(bw, depth);
+        }
+
+        @Override
+        public void printOpeningBrace(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printOpeningBrace(bw, depth);
+        }
+
+        @Override
+        public void printCommentStart(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printCommentStart(bw, depth);
+        }
+
+        @Override
+        public void printHeaderCommentStart(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printHeaderCommentStart(bw, depth);
+        }
+
+        @Override
+        public void printHeaderCommentEnd(BufferedWriter bw, int depth) throws IOException {
+            Style.AGCEEP.printHeaderCommentEnd(bw, depth);
+        }
+
+        @Override
+        public boolean isInline(GenericObject obj) {
+            return Style.AGCEEP.isInline(obj) && obj.children.isEmpty() && obj.lists.isEmpty();
+        }
+
+        @Override
+        public boolean isInline(GenericList list) {
+            return Style.AGCEEP.isInline(list);
+        }
+
+        @Override
+        public boolean newLineAfterObject() {
+            return Style.AGCEEP.newLineAfterObject();
+        }
+    };
 }
